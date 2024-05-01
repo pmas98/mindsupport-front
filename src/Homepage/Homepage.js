@@ -6,7 +6,7 @@ const Homepage = () => {
   return (
     <div>
       <Navbar />
-      <div className="px-4 md:px-24 sm:px-16 md:py-32 sm:py-16 flex flex-col md:flex-row items-center">
+      <div className="px-4 md:px-24 sm:px-16 md:py-32 sm:py-16 flex flex-col lg:flex-row items-center">
         <div className="md:flex-1 sm:flex-1 px-12">
           <h1 className="xl:text-8xl md:text-7xl sm:text-6xl text-6xl font-primaryRegular text-gray-500 mb-4 md:mb-8 sm:mb-8">
             Sua plataforma de saúde mental{" "}
@@ -21,7 +21,7 @@ const Homepage = () => {
           <img
             src="people.jpg"
             alt="Image"
-            className="rounded-md border xl:w-full sm:w-full"
+            className="rounded-md border xl:w-full sm:w-full md:w-auto mx-auto md:mx-0"
           />
         </div>
       </div>
