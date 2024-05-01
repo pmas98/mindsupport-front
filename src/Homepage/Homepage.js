@@ -6,11 +6,13 @@ const Homepage = () => {
   return (
     <div>
       <Navbar />
-      <div className="px-4 md:px-24 sm:px-16 md:py-32 sm:py-16 flex flex-col lg:flex-row items-center">
+      <div className="px-4 md:px-24 sm:px-16 md:py-32 sm:py-16 py-6 flex flex-col lg:flex-row items-center">
         <div className="md:flex-1 sm:flex-1 px-12">
           <h1 className="xl:text-8xl md:text-7xl sm:text-6xl text-6xl font-primaryRegular text-gray-500 mb-4 md:mb-8 sm:mb-8">
             Sua plataforma de saúde mental{" "}
-            <span className="text-[#e21b5a] font-primaryBold underline">colaborativa</span>
+            <span className="text-[#e21b5a] font-primaryBold underline">
+              colaborativa
+            </span>
           </h1>
           <h3 className="font-primaryMedium text-lg md:text-2xl text-gray-500 mb-8 lg:w-full max-w-full">
             Seu espaço seguro para compartilhar experiências, buscar ajuda e
@@ -26,7 +28,7 @@ const Homepage = () => {
         </div>
       </div>
 
-      <div className="px-24 py-16 sm:px-16">
+      <div className="px-4 py-16 lg:px-24">
         <div className="bg-[#e21b5a] rounded-lg border border-gray-200 shadow-md p-8 max-w-6xl mx-auto sm:max-w-full sm:px-4 mb-16">
           <h2 className="font-primaryBold text-2xl sm:text-4xl font-bold text-center text-white">
             Temas
@@ -34,8 +36,9 @@ const Homepage = () => {
         </div>
         <Carousel />
       </div>
+
       <hr className="w-[40vw] border-[#e21b5a] mx-auto border-[.1vw] mb-4" />
-      <div className="py-8 mx-24">
+      <div className="py-8 mx-12 lg:mx-24">
         <div className="bg-[#e21b5a] rounded-lg border border-gray-200 shadow-md p-8 max-w-6xl mx-auto sm:max-w-full sm:px-4">
           <h2 className="font-primaryBold text-2xl sm:text-4xl font-bold text-center text-white">
             Como Funciona
@@ -70,23 +73,31 @@ const Homepage = () => {
         <div className="flex flex-col md:flex-row justify-center items-center md:space-x-24 xl:space-x-96 my-16">
           <div className="flex flex-col items-center mb-8 md:mb-0">
             <div className="w-40 h-40 bg-[#e21b5a] rounded-full flex justify-center items-center mb-4"></div>
-            <p className="font-primaryMedium text-2xl text-center text-gray-600">Segurança</p>
+            <p className="font-primaryMedium text-2xl text-center text-gray-600">
+              Segurança
+            </p>
           </div>
 
           <div className="flex flex-col items-center mb-8 md:mb-0">
             <div className="w-40 h-40 bg-[#e21b5a] rounded-full flex justify-center items-center mb-4"></div>
-            <p className="font-primaryMedium text-2xl text-center text-gray-600">Privacidade</p>
+            <p className="font-primaryMedium text-2xl text-center text-gray-600">
+              Privacidade
+            </p>
           </div>
 
           <div className="flex flex-col items-center">
             <div className="w-40 h-40 bg-[#e21b5a] rounded-full flex justify-center items-center mb-4"></div>
-            <p className="font-primaryMedium text-2xl text-center text-gray-600">Suporte</p>
+            <p className="font-primaryMedium text-2xl text-center text-gray-600">
+              Suporte
+            </p>
           </div>
         </div>
       </div>
       <footer className="bg-[#e21b5a] py-8">
         <div className="container mx-auto text-center">
-          <p className="font-primaryMedium text-white text-2xl">Todos os direitos reservados</p>
+          <p className="font-primaryMedium text-white text-2xl">
+            Todos os direitos reservados
+          </p>
         </div>
       </footer>
     </div>
