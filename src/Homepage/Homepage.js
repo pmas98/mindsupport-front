@@ -26,7 +26,7 @@ const Homepage = () => {
         </div>
       </div>
 
-      <div className="px-24 py-16">
+      <div className="px-24 py-16 sm:px-16">
         <div className="bg-[#e21b5a] rounded-lg border border-gray-200 shadow-md p-8 max-w-6xl mx-auto sm:max-w-full sm:px-4 mb-16">
           <h2 className="font-primaryBold text-2xl sm:text-4xl font-bold text-center text-white">
             Temas
