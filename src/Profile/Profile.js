@@ -18,7 +18,7 @@ const Profile = () => {
         {/* Right Side */}
         <div className="flex flex-col items-center md:items-start">
           <div className="bg-white border-2 border-gray-300 rounded-[10px] px-8 py-2">
-            <h2 className="text-2xl md:text-3xl fontPrimary-bold text-gray-500">Meus Dados</h2>
+            <h2 className="text-4xl fontPrimary-bold text-gray-500">Meus Dados</h2>
           </div>
           <div className="flex flex-col gap-4">
             <div className="mt-4 bg-white p-4 rounded-md shadow">
