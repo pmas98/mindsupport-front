@@ -84,7 +84,7 @@ const Navbar = () => {
                 Login
               </button>
             </Link>
-            <Link to="/registro">
+            <Link to="/register">
               {" "}
               {/* Add Link with correct path */}
               <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
@@ -108,7 +108,7 @@ const Navbar = () => {
                 Login
               </button>
             </Link>
-            <Link to="/registro">
+            <Link to="/register">
               {" "}
               {/* Add Link with correct path */}
               <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">

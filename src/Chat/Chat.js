@@ -7,13 +7,17 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 import Spinner from "../components/loadingSpinner";
+import TimeOut from "../components/timedOutMessage";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [webSocket, setWebSocket] = useState(null);
   const [audioData, setAudioData] = useState(null);
-  const currentUserID = 1;
+  const [currentUserID, setCurrentUserID] = useState(1); // Replace '1' with the actual user ID
+  const [username, setUsername] = useState(""); // Replace '1' with the actual user ID
+  const [timeout, setTimeOut] = useState(null); // Replace '1' with the actual user ID
+
   const chatContainerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const recorderControls = useAudioRecorder();
@@ -27,9 +31,8 @@ const Chat = () => {
     const formData = new FormData();
     formData.append("audio", audioData);
     formData.append("room", 1); // Replace 'your_room_id' with the actual room ID
-    formData.append("username", "Fulano"); // Replace 'your_username' with the actual username
-    const yourAccessToken =
-    "access_token";
+    formData.append("username", username); // Replace 'your_username' with the actual username
+    const yourAccessToken = localStorage.getItem("accessToken");
     fetch(
       "https://mindsupport-production.up.railway.app/api/v1/upload-audio/",
       {
@@ -54,7 +57,7 @@ const Chat = () => {
             JSON.stringify({
               message: newMessage,
               user_id: currentUserID,
-              username: "Fulano",
+              username: username,
               audio: data.audio,
             })
           );
@@ -75,7 +78,7 @@ const Chat = () => {
         JSON.stringify({
           message: newMessage,
           user_id: currentUserID,
-          username: "Fulano",
+          username: username,
         })
       );
       setNewMessage(""); // Clear input field after sending message
@@ -88,9 +91,8 @@ const Chat = () => {
   };
   const fetchMessages = () => {
     setIsLoading(true);
-    const accessToken =
-    "access_token";
-
+    const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken)
     const config = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -111,12 +113,42 @@ const Chat = () => {
         setIsLoading(false);
       })
       .catch((error) => {
+        setTimeOut(true)
         console.error("Error fetching messages:", error);
         setIsLoading(false);
       });
   };
+  const fetchUserData = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+  
+      if (!accessToken) {
+        console.error("Access token not found in local storage");
+        return;
+      }
+  
+      const response = await fetch("https://mindsupport-production.up.railway.app/api/v1/user/", {
+        headers: {
+          "Authorization": `Bearer ${accessToken}`,
+        },
+      });
+  
+      if (response.ok) {
+        const userData = await response.json();
+        setCurrentUserID(userData.id);
+        setUsername(userData.username)
+        console.log("User data:", userData);
+      } else {
+        setTimeOut(true)
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   useEffect(() => {
     fetchMessages();
+    fetchUserData();
     const ws = new WebSocket("ws://127.0.0.1:8000/ws/1/");
 
     ws.onopen = () => {
@@ -156,7 +188,7 @@ const Chat = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-
+      {timeout ? <TimeOut /> : null}
       <div className="flex-grow flex flex-col px-4 sm:px-8 md:px-16 lg:px-80">
         <div className="flex justify-between items-center pt-12 px-4">
           <div className="bg-white border-2 border-gray-300 rounded-[10px] px-8 py-2">

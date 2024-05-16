@@ -6,7 +6,7 @@ const Homepage = () => {
   return (
     <div>
       <Navbar />
-      <div className="px-4 md:px-24 sm:px-16 md:py-32 sm:py-16 py-6 flex flex-col lg:flex-row items-center">
+      <div className="px-4 md:px-24 sm:px-16 md:py-16 sm:py-16 py-6 flex flex-col lg:flex-row items-center">
         <div className="md:flex-1 sm:flex-1 px-12">
           <h1 className="xl:text-8xl md:text-7xl sm:text-6xl text-6xl font-primaryRegular text-gray-500 mb-4 md:mb-8 sm:mb-8">
             Sua plataforma de saúde mental{" "}
@@ -70,7 +70,7 @@ const Homepage = () => {
             Nossos Valores
           </h2>
         </div>
-        <div className="flex flex-col md:flex-row justify-center items-center md:space-x-24 xl:space-x-96 my-16">
+        <div className="flex flex-col md:flex-row justify-center items-center md:space-x-24 xl:space-x-64 my-16">
           <div className="flex flex-col items-center mb-8 md:mb-0">
             <div className="w-40 h-40 bg-[#e21b5a] rounded-full flex justify-center items-center mb-4"></div>
             <p className="font-primaryMedium text-2xl text-center text-gray-600">
