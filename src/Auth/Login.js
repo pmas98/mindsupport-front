@@ -32,7 +32,7 @@ const Login = () => {
         const accessToken = data.token.access;
         console.log(data)
         localStorage.setItem("accessToken", accessToken);
-        navigate("/chat");
+        navigate("/");
         toast.success("Login successful!");
       } else {
         console.error("Login failed");

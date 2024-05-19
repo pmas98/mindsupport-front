@@ -1,8 +1,10 @@
 // Home.js
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/navbar";
-import Carousel from "../components/carousel";
-const Homepage = () => {
+import Carousel from "../components/carousel"
+import { useState } from "react";
+
+const Homepage = () => {  
   return (
     <div>
       <Navbar />

@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 const UserChat = ({ color, username, message, onReport, isOwnMessage, audio }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
-
+  console.log(color)
   const isAudioMessage = (url) => {
     const audioExtensions = ['.mp3', '.wav', '.ogg'];
     return audioExtensions.some((ext) => url.includes(ext));
@@ -23,7 +23,7 @@ const UserChat = ({ color, username, message, onReport, isOwnMessage, audio }) =
   return (
     <div className={`flex items-start mb-4 ${isOwnMessage ? 'flex-row-reverse pr-5' : ''}`}>
       <div
-        className={`mt-3 w-10 h-10 rounded-full bg-${color}-500 ${
+        className={`mt-3 w-10 h-10 rounded-full ${color} ${
           isOwnMessage ? 'ml-2 sm:ml-4' : 'mr-2 sm:mr-4'
         }`}
       ></div>
