@@ -52,19 +52,19 @@ const Homepage = () => {
               className="rounded-md border w-full"
             />
           </div>
-
           <div className="md:w-2/3 order-2 md:order-1 lg:ml-16">
-            <h3 className="font-primaryBold text-2xl md:text-4xl lg:text-6xl xl:text-8xl font-bold mb-2">
-              BIG Text with Underline
-            </h3>
-            <p className="font-primaryMedium text-sm md:text-base text-gray-500">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </p>
-          </div>
-        </div>
+    <h3 className="font-primaryBold text-2xl md:text-4xl lg:text-6xl xl:text-8xl font-bold mb-2">
+    Um espaço seguro de apoio.
+    </h3>
+    <h3 className="font-primaryMedium text-lg md:text-2xl text-gray-500 mb-8 lg:w-full max-w-full">
+  O mindsupport oferece um ambiente seguro e acolhedor para você se conectar com outras pessoas que estão passando por desafios semelhantes.</h3>
+  <p className="font-primaryMedium text-sm md:text-base text-gray-500">
+  Em sessões moderadas por um profissional qualificado, você terá a oportunidade de:</p>
+    <p>Compartilhar suas experiências e sentimentos:</p><p className="font-primaryMedium text-sm md:text-base text-gray-500"> Desabafe sobre problemas pessoais, como depressão, ansiedade, estresse, relacionamentos interpessoais, entre outros, sem julgamentos.</p>
+    <p>Ouvir e aprender com outras pessoas:</p> <p className="font-primaryMedium text-sm md:text-base text-gray-500">As experiências e perspectivas dos outros membros do grupo podem te oferecer novas compreensões e insights sobre seus próprios desafios.</p>
+    <p>Receber apoio e orientação:</p><p className="font-primaryMedium text-sm md:text-base text-gray-500">O moderador da terapia irá guiar o grupo, estimular a escuta ativa e o respeito mútuo, e oferecer suporte profissional durante todo o processo.</p>
+  </div>
+  </div>
         <div className="bg-[#e21b5a] rounded-lg border border-gray-200 shadow-md p-8 max-w-6xl mx-auto sm:max-w-full sm:px-4">
           <h2 className="font-primaryBold text-2xl sm:text-4xl font-bold text-center text-white">
             Nossos Valores
@@ -105,3 +105,4 @@ const Homepage = () => {
 };
 
 export default Homepage;
+
