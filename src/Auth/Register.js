@@ -7,7 +7,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isModeratorChecked, setIsModeratorChecked] = useState(false);
-  const [moderatorReason, setModeratorReason] = useState("");
+  const [reason, setReason] = useState("");
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -23,24 +23,28 @@ const Register = () => {
   };
 
   const handleModeratorReasonChange = (e) => {
-    setModeratorReason(e.target.value);
+    setReason(e.target.value);
   };
 
   const handleRegister = async () => {
     try {
-      const response = await fetch("https://mindsupport-production.up.railway.app/api/v1/register/", {
+      const endpoint = isModeratorChecked
+        ? "https://mindsupport-production.up.railway.app/api/v1/register/moderator/"
+        : "https://mindsupport-production.up.railway.app/api/v1/register/";
+  
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, isModeratorChecked, moderatorReason }),
+        body: JSON.stringify({ email, password, reason }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         const accessToken = data.accessToken;
         localStorage.setItem("accessToken", accessToken);
-
+  
         toast.success("Registrado com Sucesso!");
       } else {
         console.error("Registration failed");
@@ -124,7 +128,7 @@ const Register = () => {
                 </label>
                 <textarea
                   id="moderatorReason"
-                  value={moderatorReason}
+                  value={reason}
                   onChange={handleModeratorReasonChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   rows="4"

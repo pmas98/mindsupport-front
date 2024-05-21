@@ -9,6 +9,7 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 import Spinner from "../components/loadingSpinner";
 import TimeOut from "../components/timedOutMessage";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import RemoveUserModal from "../components/removeUser";
 
 const Chat = () => {
   const { id } = useParams();
@@ -18,17 +19,24 @@ const Chat = () => {
   const [webSocket, setWebSocket] = useState(null);
   const [audioData, setAudioData] = useState(null);
   const userId = localStorage.getItem("userId");
+
   const [currentUserID, setCurrentUserID] = useState(userId); // Replace '1' with the actual user ID
   const [username, setUsername] = useState(""); // Replace '1' with the actual user ID
   const [timeout, setTimeOut] = useState(null); // Replace '1' with the actual user ID
-
+  const isModerator = localStorage.getItem("isModerator");
   const chatContainerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const recorderControls = useAudioRecorder();
+  const [shouldUpdate, setShouldUpdate] = useState(false);
 
   const addAudioElement = (blob) => {
     setAudioData(blob);
   };
+
+  const handleUpdate = () => {
+    setShouldUpdate(!shouldUpdate);
+  };
+
 
   const sendAudioElement = () => {
     setIsLoading(true);
@@ -59,6 +67,7 @@ const Chat = () => {
         if (webSocket && webSocket.readyState === WebSocket.OPEN) {
           webSocket.send(
             JSON.stringify({
+              is_moderator: isModerator,
               message: newMessage,
               user_id: currentUserID,
               username: username,
@@ -80,6 +89,7 @@ const Chat = () => {
     if (webSocket && webSocket.readyState === WebSocket.OPEN) {
       webSocket.send(
         JSON.stringify({
+          is_moderator: isModerator,
           message: newMessage,
           user_id: currentUserID,
           username: username,
@@ -187,8 +197,9 @@ const Chat = () => {
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
       // Check if the message was sent by the current user
-      if (message.userid !== currentUserID) {
-        setMessages((prevMessages) => [message, ...prevMessages]); // Add message to the beginning of the array
+      if (message.user_id !== currentUserID) {
+        console.log("Message received:", message)
+          setMessages((prevMessages) => [message, ...prevMessages]); // Add message to the beginning of the array
       }
     };
 
@@ -212,17 +223,18 @@ const Chat = () => {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, shouldUpdate]);
 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
+
       {timeout ? <TimeOut /> : null}
       <div className="flex-grow flex flex-col px-4 sm:px-8 md:px-16 lg:px-80">
         <div className="flex justify-between items-center pt-12 px-4">
           <div className="bg-white border-2 border-gray-300 rounded-[10px] px-8 py-2">
             <span className="font-primaryMedium text-l sm:text-3xl">
-              Sala X
+              Sala {id}
             </span>
           </div>
           <Link to="/salas">
@@ -248,7 +260,7 @@ const Chat = () => {
           </div>
           <div
             ref={chatContainerRef}
-            className="flex-grow overflow-y-auto max-h-[450px]"
+            className="flex-grow overflow-y-auto max-h-[750px]"
           >
             {isLoading ? (
               <Spinner />
@@ -259,12 +271,16 @@ const Chat = () => {
                 .map((message, index) => (
                   <UserChat
                     key={index}
+                    isModerator={message.is_moderator === "true"}
                     color={message.user_id === currentUserID ? localStorage.getItem("color") : "bg-red-400"}
                     username={message.username}
                     message={message.message}
                     onReport={handleReport}
                     isOwnMessage={message.user_id === currentUserID}
                     audio={message.audio ? message.audio : ""}
+                    handleUpdate={handleUpdate}
+                    user_id={message.user_id}
+                    roomId={id}
                   />
                 ))
             )}

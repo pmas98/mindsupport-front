@@ -5,12 +5,25 @@ import Component from "../components/roomElement";
 import moment from "moment/moment";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import CreateRoomModal from "../components/createRoom";
+import CreateThemeModal from "../components/createTheme";
 
 const Sala = () => {
   const [rooms, setRooms] = useState([]);
   const [themes, setThemes] = useState([]);
   const navigate = useNavigate();
-  const [shouldUpdate, setShouldUpdate] = useState(false); 
+  const [shouldUpdate, setShouldUpdate] = useState(false);
+  const isModerator = localStorage.getItem("isModerator") === "true"
+  const [openModal, setOpenModal] = useState(false);
+  const [openModalTheme, setOpenModalTheme] = useState(false);
+
+  const handleModal = () => {
+    setOpenModal(!openModal);
+  };
+
+  const handleModalTheme = () => {
+    setOpenModalTheme(!openModalTheme);
+  };
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -66,12 +79,19 @@ const Sala = () => {
 
   const handleUpdate = () => {
     setShouldUpdate(!shouldUpdate); // Toggle the shouldUpdate state to trigger a re-render
-  };  
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <Toaster />
+      {isModerator && openModal ? (
+        <CreateRoomModal themes={themes} handleUpdate={handleUpdate} />
+      ) : null}
+      {isModerator && openModalTheme ? (
+        <CreateThemeModal handleUpdate={handleUpdate} />
+      ) : null}
+      
       <div className="px-64 pt-16">
         <div className="flex flex-col space-y-4">
           {rooms.length !== 0 ? (
@@ -83,17 +103,37 @@ const Sala = () => {
                 >
                   Suas Salas
                 </button>
+                {isModerator && (
+                  <div>
+                    <button
+                      onClick={() => handleModal()}
+                      className="self-start font-primaryBold text-4xl mb-6 bg-[#e21b5a] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      + Criar Sala
+                    </button>
+                    <button
+                      onClick={() => handleModalTheme()}
+                      className="self-start font-primaryBold text-4xl mb-6 bg-[#e21b5a] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
+                    >
+                     + Criar Tema
+                    </button>
+                  </div>
+                )}
               </div>
               {rooms.map((room) =>
                 room.user_in_room ? (
                   <Link key={room.id} to={`/chat/${room.id}`}>
-                  <Component
-                    numPeople={`${room.room_capacity}`}
-                    theme={themes.find((theme) => theme.id === room.theme)?.name}
-                    existenceTime={moment(room.date_created).format("DD/MM/YYYY")}
-                    roomId={room.id}
-                  />
-                </Link>
+                    <Component
+                      numPeople={`${room.room_capacity}`}
+                      theme={
+                        themes.find((theme) => theme.id === room.theme)?.name
+                      }
+                      existenceTime={moment(room.date_created).format(
+                        "DD/MM/YYYY"
+                      )}
+                      roomId={room.id}
+                    />
+                  </Link>
                 ) : null
               )}
             </div>
@@ -113,17 +153,19 @@ const Sala = () => {
               </h2>
             </div>
             {rooms.map((room) =>
-              room.user_in_room ? null : (
-                room.theme === theme.id && (
-                  <Component
-                    key={room.id}
-                    numPeople={room.room_capacity}
-                    existenceTime={moment(room.date_created).format("DD/MM/YYYY")}
-                    roomId={room.id}
-                    handleUpdate={handleUpdate}
-                  />
-                )
-              )
+              room.user_in_room
+                ? null
+                : room.theme === theme.id && (
+                    <Component
+                      key={room.id}
+                      numPeople={room.room_capacity}
+                      existenceTime={moment(room.date_created).format(
+                        "DD/MM/YYYY"
+                      )}
+                      roomId={room.id}
+                      handleUpdate={handleUpdate}
+                    />
+                  )
             )}
           </div>
         ))}

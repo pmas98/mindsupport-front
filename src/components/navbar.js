@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isSmallScreen = useMediaQuery({ maxWidth: 768 }); // Define a boolean variable to check if screen size is small
   const [username, setUsername] = useState(null);
-  console.log(username);
+
   const fetchUserData = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
@@ -29,6 +29,7 @@ const Navbar = () => {
       if (response.ok) {
         const userData = await response.json();
         localStorage.setItem("userId", userData.id);
+        localStorage.setItem("isModerator", userData.is_moderator);
         localStorage.setItem("color", userData.color);
         setUsername(userData.username);
 
@@ -41,6 +42,8 @@ const Navbar = () => {
 
   const logout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("isModerator");
     setUsername(null);
   };
 
