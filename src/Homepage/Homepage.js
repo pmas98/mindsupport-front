@@ -59,7 +59,7 @@ const Homepage = () => {
             <h3 className="font-primaryBold text-4xl md:text-4xl lg:text-4xl xl:text-6xl font-bold mb-2">
               Um espaço seguro de apoio.
             </h3>
-            <p className="font-primaryMedium text-base md:text-lg text-gray-500">
+            <p className="mt-12 font-primaryMedium text-base md:text-lg text-gray-500">
               O mindsupport oferece um ambiente seguro e acolhedor para você se conectar com outras pessoas que estão passando por desafios semelhantes.
             </p>
               

@@ -65,6 +65,7 @@ const Chat = () => {
       .then((data) => {
         console.log(data);
         if (webSocket && webSocket.readyState === WebSocket.OPEN) {
+          console.log("Sending audio message")
           webSocket.send(
             JSON.stringify({
               is_moderator: isModerator,
