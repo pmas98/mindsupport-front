@@ -30,7 +30,6 @@ const RemoveUserModal = ({ userId, roomId, handleUpdate }) => {
         throw new Error(`Error creating theme: ${response.statusText}`);
       }
 
-      toast.success('Tema criado com sucesso!');
       setShowModal(false);
       handleUpdate();
       toast.success('Usuário removido com sucesso!');

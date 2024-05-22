@@ -21,7 +21,7 @@ const Homepage = () => {
             ajudar outras pessoas.
           </h3>
         </div>
-        <div className="md:flex-1 sm:flex-1 mt-8 md:mt-0">
+        <div className="md:flex-1 sm:flex-1 mt-8 md:mt-0 ml-4">
           <img
             src="people.jpg"
             alt="Image"

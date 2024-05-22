@@ -10,6 +10,7 @@ import Spinner from "../components/loadingSpinner";
 import TimeOut from "../components/timedOutMessage";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import RemoveUserModal from "../components/removeUser";
+import { Toaster, toast } from "react-hot-toast";
 
 const Chat = () => {
   const { id } = useParams();
@@ -228,7 +229,7 @@ const Chat = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-
+      <Toaster />
       {timeout ? <TimeOut /> : null}
       <div className="flex-grow flex flex-col px-4 sm:px-8 md:px-16 lg:px-80">
         <div className="flex justify-between items-center pt-12 px-4">
