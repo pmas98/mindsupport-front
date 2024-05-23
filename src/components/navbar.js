@@ -1,11 +1,64 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from React Router
 import { useMediaQuery } from "react-responsive"; // Import useMediaQuery hook from react-responsive
-
+import { useEffect } from "react";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isSmallScreen = useMediaQuery({ maxWidth: 768 }); // Define a boolean variable to check if screen size is small
+  const [username, setUsername] = useState(null);
 
+  const fetchUserData = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+
+      if (!accessToken) {
+        console.error("Access token not found in local storage");
+
+        return;
+      }
+
+      const response = await fetch(
+        "https://mindsupport-production.up.railway.app/api/v1/user/",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const userData = await response.json();
+        localStorage.setItem("userId", userData.id);
+        localStorage.setItem("isModerator", userData.is_moderator);
+        localStorage.setItem("color", userData.color);
+        setUsername(userData.username);
+
+        console.log("User data:", userData);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("isModerator");
+    setUsername(null);
+  };
+
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (accessToken) {
+      fetchUserData(accessToken);
+    } else {
+      // Handle the case where the accessToken doesn't exist
+      // For example, redirect the user to the login page
+      console.log("Access token not found in local storage");
+    }
+  }, []);
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
@@ -77,44 +130,57 @@ const Navbar = () => {
                 Salas
               </button>
             </Link>
-            <Link to="/login">
-              {" "}
-              {/* Add Link with correct path */}
-              <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
-                Login
-              </button>
-            </Link>
-            <Link to="/registro">
-              {" "}
-              {/* Add Link with correct path */}
-              <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
-                Registro
-              </button>
-            </Link>
           </div>
         ) : (
           <div className="flex space-x-4">
-            <Link to="/salas">
-              {" "}
-              {/* Add Link with correct path */}
-              <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
-                Salas
-              </button>
-            </Link>
-            <Link to="/login">
-              {" "}
-              {/* Add Link with correct path */}
-              <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
-                Login
-              </button>
-            </Link>
-            <Link to="/registro">
-              {" "}
-              {/* Add Link with correct path */}
-              <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
-                Registro
-              </button>
-            </Link>
+            {username !== null ? (
+              <div className="text-white font-primaryBold text-lg md:text-xl flex justify-between items-center">
+                <h2>Oi, {username}</h2>
+              </div>
+            ) : null}
+            {username !== null ? (
+              <div>
+                <Link to="/salas">
+                  {" "}
+                  {/* Add Link with correct path */}
+                  <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
+                    Salas
+                  </button>
+                </Link>
+                <Link to="/profile">
+                  {" "}
+                  {/* Add Link with correct path */}
+                  <button className="ml-1 px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
+                    Perfil
+                  </button>
+                </Link>
+                <Link to="/">
+                  <button
+                    onClick={() => logout()}
+                    className="ml-2 px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl"
+                  >
+                    Logout
+                  </button>
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link to="/login">
+                  {" "}
+                  {/* Add Link with correct path */}
+                  <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
+                    Login
+                  </button>
+                </Link>
+                <Link to="/registro">
+                  {" "}
+                  {/* Add Link with correct path */}
+                  <button className="ml-2 px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
+                    Registro
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </nav>
