@@ -18,6 +18,7 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState("");
   const [webSocket, setWebSocket] = useState(null);
   const [audioData, setAudioData] = useState(null);
+  const [lastMessage, setLastMessage] = useState(null);
   const userId = localStorage.getItem("userId");
 
   const [currentUserID, setCurrentUserID] = useState(userId); // Replace '1' with the actual user ID
@@ -198,8 +199,9 @@ const Chat = () => {
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
       // Check if the message was sent by the current user
-      if (message.user_id !== currentUserID) {
+      if (message.user_id !== currentUserID || message !== lastMessage) {
         console.log("Message received:", message)
+        setLastMessage(message);
           setMessages((prevMessages) => [message, ...prevMessages]); // Add message to the beginning of the array
       }
     };
