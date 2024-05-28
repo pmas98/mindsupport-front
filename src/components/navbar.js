@@ -47,7 +47,6 @@ const Navbar = () => {
     setUsername(null);
   };
 
-
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
 
@@ -123,13 +122,49 @@ const Navbar = () => {
               isOpen ? "mt-5 justify-between items-center" : "hidden"
             }`}
           >
-            <Link to="/salas">
-              {" "}
-              {/* Add Link with correct path */}
-              <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
-                Salas
-              </button>
-            </Link>
+            {username !== null ? (
+              <div>
+                <Link to="/salas">
+                  {" "}
+                  {/* Add Link with correct path */}
+                  <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
+                    Salas
+                  </button>
+                </Link>
+                <Link to="/profile">
+                  {" "}
+                  {/* Add Link with correct path */}
+                  <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
+                    Perfil
+                  </button>
+                </Link>
+                <Link to="/">
+                  <button
+                    onClick={() => logout()}
+                    className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl"
+                  >
+                    Logout
+                  </button>
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link to="/login">
+                  {" "}
+                  {/* Add Link with correct path */}
+                  <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
+                    Login
+                  </button>
+                </Link>
+                <Link to="/registro">
+                  {" "}
+                  {/* Add Link with correct path */}
+                  <button className="px-4 py-2 rounded-lg border border-white text-white font-medium hover:bg-white hover:text-[#e21b5a] font-primaryBold text-lg md:text-xl">
+                    Registro
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         ) : (
           <div className="flex space-x-4">

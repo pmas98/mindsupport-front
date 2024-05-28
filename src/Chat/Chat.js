@@ -28,7 +28,7 @@ const Chat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const recorderControls = useAudioRecorder();
   const [shouldUpdate, setShouldUpdate] = useState(false);
-
+  const accessToken = localStorage.getItem("accessToken");
   const addAudioElement = (blob) => {
     setAudioData(blob);
   };
@@ -304,7 +304,16 @@ const Chat = () => {
               </div>
               <button
                 className="bg-[#e21b5a] text-white px-2 sm:px-4 py-1 sm:py-2 rounded-r-none"
-                onClick={() => (audioData ? sendAudioElement() : sendMessage())}
+                onClick={() => {
+                  if (!accessToken) {
+                      // If accessToken is null, show a toast error message
+                      toast.error("Sua sessão expirou. Por favor, faça o login.");
+                  } else {
+                      // If accessToken is not null, check if audioData exists and send accordingly
+                      audioData ? sendAudioElement() : sendMessage();
+                  }
+              }}
+              
               >
                 Enviar
               </button>

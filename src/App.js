@@ -5,6 +5,7 @@ import Chat from './Chat/Chat';
 import Profile from './Profile/Profile';
 import Login from './Login/Login';
 import Registro from './Registro/Registro'
+import Sala from './Sala/Sala';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/registro" element={<Registro />} />
+          <Route exact path="/salas" element={<Sala />} />
         </Routes>
       </div>
     </Router>
