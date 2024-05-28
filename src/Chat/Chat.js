@@ -198,7 +198,7 @@ const Chat = () => {
 
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      // Check if the message was sent by the current user
+      console.log("Message received:", message);
       if (message.user_id !== currentUserID || message !== lastMessage) {
         console.log("Message received:", message)
         setLastMessage(message);
