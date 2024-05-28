@@ -1,11 +1,17 @@
-import React, { useState } from 'react'; // Import useState hook
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react"; // Import useState hook
+import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-export default function Component({ theme, numPeople, existenceTime, roomId, handleUpdate }) {
+export default function Component({
+  theme,
+  numPeople,
+  existenceTime,
+  roomId,
+  handleUpdate,
+}) {
   const [isAddingUser, setIsAddingUser] = useState(false); // State for button loading
-  const roomid = roomId
+  const roomid = roomId;
   const navigate = useNavigate();
   const [update, setUpdate] = useState(false);
 
@@ -16,52 +22,60 @@ export default function Component({ theme, numPeople, existenceTime, roomId, han
 
   const handleAddUser = async () => {
     setIsAddingUser(true); // Set loading state to show visual feedback
-  
+
     try {
       // Retrieve access token from localStorage
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
-        throw new Error('Missing access token');
+        throw new Error("Missing access token");
       }
-  
-      const payload = { sala: roomid };  
-  
-      const response = await fetch('https://mindsupport-production.up.railway.app/api/v1/addUser/', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,  // Include access token in header
-          'Content-Type': 'application/json',  // Set Content-Type to JSON
-        },
-        body: JSON.stringify(payload),  // Convert payload to JSON string
-      });
-  
+
+      const payload = { sala: roomid };
+
+      const response = await fetch(
+        "https://mindsupport-production.up.railway.app/api/v1/addUser/",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // Include access token in header
+            "Content-Type": "application/json", // Set Content-Type to JSON
+          },
+          body: JSON.stringify(payload), // Convert payload to JSON string
+        }
+      );
+
       if (!response.ok) {
         throw new Error(`Error adding user: ${response.statusText}`);
       }
-  
+
       const data = await response.json();
-      console.log('User added successfully:', data); // Handle success response
-      toast.success('Usuário adicionado com sucesso!');
-      handleInternalUpdate()
-      // navigate(`/chat/${roomid}`);
+      console.log("User added successfully:", data); // Handle success response
+      toast.success("Usuário adicionado com sucesso!");
+      handleInternalUpdate();
     } catch (error) {
-      console.error('Error adding user:', error.message); // Handle errors
+      console.error("Error adding user:", error.message); // Handle errors
     } finally {
       setIsAddingUser(false); // Reset loading state
     }
   };
-  
+
   return (
     <div>
       <div className="flex items-center justify-between p-4 border rounded-md mb-4">
-      {theme && (
-          <span className="font-primaryBold text-[#e21b5a] text-[1rem]">{theme}</span>
+        {theme && (
+          <span className="font-primaryBold text-[#e21b5a] text-[1rem]">
+            {theme}
+          </span>
         )}
         <div className="flex items-center space-x-4">
-          <span className="font-primaryMedium ml-4 text-[1.5rem">{numPeople} pessoas</span>
+          <span className="font-primaryMedium ml-4 text-[1.5rem">
+            {numPeople} pessoas
+          </span>
         </div>
         <div className="flex items-center space-x-4">
-          <span className="font-primaryMedium text-[1rem]">Data de Criação: {existenceTime}</span>
+          <span className="font-primaryMedium text-[1rem]">
+            Data de Criação: {existenceTime}
+          </span>
           <button
             className="p-2"
             variant="ghost"
@@ -69,10 +83,10 @@ export default function Component({ theme, numPeople, existenceTime, roomId, han
             onClick={handleAddUser}
           >
             {isAddingUser ? (
-              // Display loading indicator while adding user (optional)
               <div className="h-4 w-4 animate-spin rounded-full bg-gray-200"></div>
             ) : (
-              <GroupIcon className="h-6 w-6" />
+              //import a svg here
+              <img className="h-4 w-4" src="plus.svg" />
             )}
           </button>
         </div>
